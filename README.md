@@ -32,7 +32,7 @@ It uses the Stm32 HAL library to make programming easy just like Arduino IDE. Eg
 
 ## 1. System Core
 1. We need to configure the RCC in the System Core tab to set the internal clock of the microcontroller. We can use the internal clock (HSI), external crystal (HSE) or bypass the internal clock which means that your clock signal goes directly into the clock input it can be from an external clock generator or anything which make the OSC_OUT pin floating.
-2. To congifure the debug wires , select the **Serial** Wire for debugging in the SYS tab.
+2. To congifure the debug wires , select the **Serial Wire** for debugging in the SYS tab.
 
 ## 2. Analog
 
