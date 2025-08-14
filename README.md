@@ -6,6 +6,11 @@ We can use different cheaper alternatives to the black pill like the standar Blu
 
 Before starting this project I would suggest y'all to read <a href="https://docs.kernel.org/hid/hidintro.html" target="_blank">HID Report Discriptors</a> for better understanding of the HID class.
 
+## Table of Contents
+- [Setup](#Setup)
+- [Code](#Codes)
+
+
 
 # Prequesites
 
@@ -79,7 +84,7 @@ We need to make some changes to the codes created by the STM32CubeIDE to make it
 - [Middlewares Source](#1-Changes-to-Middlewares-Source)
 - [USBD_COMPOSITE](#a-USBD_COMPOSITE)
 - [HID REPORT](#b-HID-REPORT)
-- [Middlewares headers](#1-Changes-to-Middlewares-Headers)
+- [Middlewares Headers](#2-Changes-to-Middlewares-Headers)
 
 
 ## 1. Changes to Middlewares Source
