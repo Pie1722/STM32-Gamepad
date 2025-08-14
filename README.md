@@ -81,6 +81,7 @@ Go to Middlewares\ST\STM32_USB_Device_Library\Class\HID\Src\usbd_hid.c and open 
 
 This program is created by the IDE for a USB mouse, so we need to change the report according to our specific hardware and needs.
 
+### USBD_COMPOSITE
 ```C++
 #ifndef USE_USBD_COMPOSITE
 /* USB HID device FS Configuration Descriptor */
@@ -142,6 +143,8 @@ We can see here in the **Descriptor of Joystick Mouse Interface** to set the **b
 We dont need the device to show up at boot time, it is useful for mouse when we need to make changes in the bios but for our game controller its not required.
 
 We need to make the interface protocol as 0x00 as its a custom gamepad.
+
+### HID REPORT
 
 Now we need to make sure to create our own custom hid report, so I've created this HID report for 4 axis joysticks, 12 buttons and 1 Hat switch which is 4 Dpads
 
