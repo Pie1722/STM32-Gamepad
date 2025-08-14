@@ -138,13 +138,11 @@ __ALIGN_BEGIN static uint8_t USBD_HID_CfgDesc[USB_HID_CONFIG_DESC_SIZ] __ALIGN_E
 };
 #endif /* USE_USBD_COMPOSITE  */
 ```
-We can see here in the **Descriptor of Joystick Mouse Interface** to set the 
-**bInterfaceSubClass** : *1=BOOT, 0=no boot* and 
-**nInterfaceProtocol** : *0=none, 1=keyboard, 2=mouse*
+We can see here in the **Descriptor of Joystick Mouse Interface** to set the **bInterfaceSubClass** : *1=BOOT, 0=no boot* and **nInterfaceProtocol** : *0=none, 1=keyboard, 2=mouse*
 
 We dont need the device to show up at boot time, it is useful for mouse when we need to make changes in the bios but for our game controller its not required.
 
-We need to make the interface protocol as 0x00 as its a custom gamepad.
+We need to make the interface protocol as **0x00** as its a custom gamepad.
 
 ### b. HID REPORT
 
@@ -219,7 +217,7 @@ As we have made changes to the source files we need to make sure the headers mat
 ```
 Now we need to change the descriptor size with the actuall size which is 72 Bytes
 
-*HID_EPIN_SIZE* is the size of the actual data packet you send to the host. In our case: 0x0B → 11 bytes (88 bits). We can calculate it like this:
+**HID_EPIN_SIZE** is the size of the actual data packet you send to the host. In our case: 0x0B → 11 bytes (88 bits). We can calculate it like this:
 
 | Section     | Bits |
 | ----------- | ---- |
