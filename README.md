@@ -31,7 +31,7 @@ It uses the Stm32 HAL library to make programming easy just like Arduino IDE. Eg
 1. We need to configure the RCC in the System Core tab to set the internal clock of the microcontroller. We can use the internal clock (HSI), external crystal (HSE) or bypass the internal clock which means that your clock signal goes directly into the clock input it can be from an external clock generator or anything which make the OSC_OUT pin floating.
 2. To congifure the debug wires , select the **Serial** Wire for debugging in the SYS tab.
 
-[Analog](#2-analog)
+## 2. Analog
 
 You can use the Timer 3 for the ADC conversion to get triggers every time the Timer resets using the interrupt generated.
 
