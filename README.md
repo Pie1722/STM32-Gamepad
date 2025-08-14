@@ -75,13 +75,13 @@ After that press ctrl+S to save the file and use the auto code generator and sel
 
 We need to make some changes to the codes created by the STM32CubeIDE to make it work for our custom hardware.
 
-## 1. Changes to Middlewares
+## 1. Changes to Middlewares Source
 
 Go to Middlewares\ST\STM32_USB_Device_Library\Class\HID\Src\usbd_hid.c and open the file in the project window.
 
 This program is created by the IDE for a USB mouse, so we need to change the report according to our specific hardware and needs.
 
-### USBD_COMPOSITE
+### a. USBD_COMPOSITE
 ```C++
 #ifndef USE_USBD_COMPOSITE
 /* USB HID device FS Configuration Descriptor */
@@ -144,7 +144,7 @@ We dont need the device to show up at boot time, it is useful for mouse when we 
 
 We need to make the interface protocol as 0x00 as its a custom gamepad.
 
-### HID REPORT
+### b. HID REPORT
 
 Now we need to make sure to create our own custom hid report, so I've created this HID report for 4 axis joysticks, 12 buttons and 1 Hat switch which is 4 Dpads
 
@@ -197,3 +197,33 @@ __ALIGN_BEGIN static uint8_t HID_MOUSE_ReportDesc[HID_MOUSE_REPORT_DESC_SIZE] __
 		  0xC0               // End Collection
 };
 ```
+The size of this whole report is 72 Bytes and this report is pretty much self explainatory with comments.
+
+## 2. Changes to Middlewares Headers
+
+Go to Middlewares\ST\STM32_USB_Device_Library\Class\HID\Inc and open the code in the project window
+
+As we have made changes to the source files we need to make sure the headers match perfectly. If anything is not properly defined the whole stack will be broken and your computer wont recognize the device as a vaid HID.
+
+```C++
+#ifndef HID_EPIN_ADDR
+#define HID_EPIN_ADDR                              0x81U
+#endif /* HID_EPIN_ADDR */
+#define HID_EPIN_SIZE                              0x0BU
+
+#define USB_HID_CONFIG_DESC_SIZ                    34U
+#define USB_HID_DESC_SIZ                           9U
+#define HID_MOUSE_REPORT_DESC_SIZE                 72U
+```
+Now we need to change the descriptor size with the actuall size which is 72 Bytes
+
+*HID_EPIN_SIZE* is the size of the actual data packet you send to the host. In our case: 0x0B → 11 bytes (88 bits). We can calculate it like this:
+
+| Section     | Bits |
+| ----------- | ---- |
+| Buttons     | 12   |
+| Padding     | 4    |
+| Hat switch  | 8    |
+| Axes (4×16) | 64   |
+| **Total**   | 88   |
+
