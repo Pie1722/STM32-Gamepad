@@ -9,7 +9,7 @@ Before starting this project I would suggest y'all to read <a href="https://docs
 
 # Prequesites
 
-Make sure to install the [STM32CubeIde] (https://www.st.com/en/development-tools/stm32cubeide.html) and also the [STLink Utility] (https://www.st.com/en/development-tools/stsw-link004.html) for uploading the programs if you have the cheap STLink programmer. It might and might not work with STM32CubeIDe.
+Make sure to install the <a href="https://www.st.com/en/development-tools/stm32cubeide.html" target="_blank">STM32CubeIde</a> and also the <a href="https://www.st.com/en/development-tools/stsw-link004.htmll" target="_blank">STLink Utility</a> for uploading the programs if you have the cheap STLink programmer. It might and might not work with STM32CubeIDe.
 
 Create a new project and enter the microcontroller eg- STM32F103C8T6
 
