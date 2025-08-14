@@ -138,7 +138,9 @@ __ALIGN_BEGIN static uint8_t USBD_HID_CfgDesc[USB_HID_CONFIG_DESC_SIZ] __ALIGN_E
 };
 #endif /* USE_USBD_COMPOSITE  */
 ```
-We can see here in the **Descriptor of Joystick Mouse Interface** to set the **bInterfaceSubClass** : *1=BOOT, 0=no boot* and **nInterfaceProtocol** : *0=none, 1=keyboard, 2=mouse*
+We can see here in the **Descriptor of Joystick Mouse Interface** to set the 
+**bInterfaceSubClass** : *1=BOOT, 0=no boot* and 
+**nInterfaceProtocol** : *0=none, 1=keyboard, 2=mouse*
 
 We dont need the device to show up at boot time, it is useful for mouse when we need to make changes in the bios but for our game controller its not required.
 
