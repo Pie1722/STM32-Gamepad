@@ -19,11 +19,19 @@ We need to set up the STM32CubeIde for our particular microcontroller so that we
 
 It uses the Stm32 HAL library to make programming easy just like Arduino IDE. Eg- Arduino - delay(500);     STM32 - HAL_Delay(500);    
 
+## Table of Contents
+- [System Core](#1-system-core)
+- [Analog](#2-analog)
+- [Connectivity](#3-connectivity)
+- [Middlewares](#4-middlewares)
+- [Clock Config](#5-clock-config)
+- [Pin Config](#6-pin-config)
+
 ## 1. System Core
 1. We need to configure the RCC in the System Core tab to set the internal clock of the microcontroller. We can use the internal clock (HSI), external crystal (HSE) or bypass the internal clock which means that your clock signal goes directly into the clock input it can be from an external clock generator or anything which make the OSC_OUT pin floating.
 2. To congifure the debug wires , select the **Serial** Wire for debugging in the SYS tab.
 
-## 2. Analog
+[Analog](#2-analog)
 
 You can use the Timer 3 for the ADC conversion to get triggers every time the Timer resets using the interrupt generated.
 
