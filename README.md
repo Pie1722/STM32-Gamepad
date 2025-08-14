@@ -227,3 +227,5 @@ Now we need to change the descriptor size with the actuall size which is 72 Byte
 | Axes (4×16) | 64   |
 | **Total**   | 88   |
 
+## 3. Changes to main.c
+
