@@ -237,6 +237,7 @@ Now we need to change the descriptor size with the actuall size which is 72 Byte
 | Axes (4×16) | 64   |
 | **Total**   | 88   |
 
+
 ## 3. Changes to main.c
 
 1. We need to create a struct to send the report
@@ -248,6 +249,7 @@ typedef struct __attribute__((packed)) {
     int16_t x, y, rx, ry;
 } joystickReport;
 ```
+
 
 2. Initialize an array for storing ADC data. **void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc){}** This function handles the ADC DMA. We can keep the function empty but it needs to be present for processing by the DMA
 
@@ -263,6 +265,7 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
     }
 }
 ```
+
 
 3. Create functions to get HAT switches and all the other reports to send data through USB
 
@@ -317,14 +320,16 @@ void send_gamepad_report(void)
     USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&report, sizeof(report));
 }
 ```
-4. We need to start the DMA in the main()
+
+4. We need to start the DMA in the ***main()***
 
 ```C
   HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adcVal, 4);
 ```
-Then just call the *send_gamepad_report()* to continuously send values through USB
+Then just call the ***send_gamepad_report()*** to continuously send values through USB
 
-5. Make sure to check the MX_ADC1_Init() to see if the ADC is properly assigned to each channels with their proper ranks
+
+5. Make sure to check the ***MX_ADC1_Init()*** to see if the ADC is properly assigned to each channels with their proper ranks
 
 ```C
   /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
@@ -365,7 +370,8 @@ Then just call the *send_gamepad_report()* to continuously send values through U
   }
 ```
 
-6. Make sure to check the *MX_GPIO_Init()* for the correct pin definitons and pullups or pulldowns
+
+6. Make sure to check the ***MX_GPIO_Init()*** for the correct pin definitons and pullups or pulldowns
 
 ```C
 /*Configure GPIO pins : PA4 PA8 PA9 PA10
@@ -386,6 +392,7 @@ Then just call the *send_gamepad_report()* to continuously send values through U
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 ```
+
 
 7. Also check the *SystemClock_Config()* for proper clock definitons. Here I am using HSE.
 
