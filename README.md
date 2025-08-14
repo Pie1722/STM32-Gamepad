@@ -6,11 +6,9 @@ We can use different cheaper alternatives to the black pill like the standar Blu
 
 Before starting this project I would suggest y'all to read <a href="https://docs.kernel.org/hid/hidintro.html" target="_blank">HID Report Discriptors</a> for better understanding of the HID class.
 
-## Table of Contents
+## Contents
 - [Setup](#Setup)
 - [Code](#Codes)
-
-
 
 # Prequesites
 
