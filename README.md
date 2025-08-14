@@ -60,3 +60,5 @@ volatile uint16_t adcVal[4] = {0};
 ## 6. Pin Config
 
 Set the desired pin to be GPIO Input or Output. If you want to make the pins INPUT_PULLUP, go the the System Core tab and then go the the GPIO and set each pins to be INPUT_PULLUP or INPUT_PULLDOWN.
+
+After that press ctrl+S to save the file and use the auto code generator and select OK. This will make sure that all the necessary files and code are generated.
