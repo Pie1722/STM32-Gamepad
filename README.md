@@ -75,6 +75,13 @@ After that press ctrl+S to save the file and use the auto code generator and sel
 
 We need to make some changes to the codes created by the STM32CubeIDE to make it work for our custom hardware.
 
+## Table of Contents
+- [Middlewares Source](#1-Changes-to-Middlewares-Source)
+-- [Analog](#2-analog)
+-- [Connectivity](#3-connectivity)
+- [Middlewares](#4-middlewares)
+
+
 ## 1. Changes to Middlewares Source
 
 Go to Middlewares\ST\STM32_USB_Device_Library\Class\HID\Src\usbd_hid.c and open the file in the project window.
