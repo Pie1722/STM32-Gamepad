@@ -77,9 +77,9 @@ We need to make some changes to the codes created by the STM32CubeIDE to make it
 
 ## Table of Contents
 - [Middlewares Source](#1-Changes-to-Middlewares-Source)
--- [Analog](#2-analog)
--- [Connectivity](#3-connectivity)
-- [Middlewares](#4-middlewares)
+- [USBD_COMPOSITE](#a-USBD_COMPOSITE)
+- [HID REPORT](#b-HID-REPORT)
+- [Middlewares headers](#1-Changes-to-Middlewares-Headers)
 
 
 ## 1. Changes to Middlewares Source
