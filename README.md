@@ -277,14 +277,14 @@ uint8_t get_hat_value(void)
 	uint8_t left  = !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4);
 	uint8_t right = !HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_15);
 
-    if (up)            return 0;  // Up
     if (up && right)   return 1;  // Up-Right
-    if (right)         return 2;  // Right
     if (right && down) return 3;  // Down-Right
-    if (down)          return 4;  // Down
     if (down && left)  return 5;  // Down-Left
-    if (left)          return 6;  // Left
     if (left && up)    return 7;  // Up-Left
+    if (up)            return 0;  // Up
+    if (right)         return 2;  // Right
+    if (down)          return 4;  // Down
+    if (left)          return 6;  // Left
 
     return 0x0F;  // Neutral
 }
