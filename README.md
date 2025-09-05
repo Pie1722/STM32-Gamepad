@@ -1,6 +1,5 @@
 # STM32 Gamepad
-<details>
-  <summary>Click to expand</summary>
+
 This is a game controller made using STM32 Black Pill (STM32F401CCU6). I have used STM32CubeIde for building this project and used the auto code generator for making my work easy.
 
 We can use different cheaper alternatives to the black pill like the standar Blue Pill board (STM32F103C8T6) or any other microcontroller which supports HID.
@@ -76,7 +75,8 @@ Set the desired pin to be GPIO Input or Output. If you want to make the pins INP
 After that press ctrl+S to save the file and use the auto code generator and select OK. This will make sure that all the necessary files and code are generated.
 
 # Codes
-
+<details>
+  <summary>DINPUT</summary>
 We need to make some changes to the codes created by the STM32CubeIDE to make it work for our custom hardware.
 
 ## Table of Contents
