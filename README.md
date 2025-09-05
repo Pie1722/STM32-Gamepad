@@ -1,5 +1,6 @@
 # STM32 Gamepad
-
+<details>
+  <summary>Click to expand</summary>
 This is a game controller made using STM32 Black Pill (STM32F401CCU6). I have used STM32CubeIde for building this project and used the auto code generator for making my work easy.
 
 We can use different cheaper alternatives to the black pill like the standar Blue Pill board (STM32F103C8T6) or any other microcontroller which supports HID.
@@ -412,3 +413,4 @@ Then just call the ***send_gamepad_report()*** to continuously send values throu
   RCC_OscInitStruct.PLL.PLLQ = 5;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
 ```
+<details>
