@@ -75,6 +75,8 @@ Set the desired pin to be GPIO Input or Output. If you want to make the pins INP
 After that press ctrl+S to save the file and use the auto code generator and select OK. This will make sure that all the necessary files and code are generated.
 
 # Codes
+
+
 <details>
   <summary>DINPUT</summary>
 	
@@ -93,62 +95,57 @@ Go to Middlewares\ST\STM32_USB_Device_Library\Class\HID\Src\usbd_hid.c and open 
 
 This program is created by the IDE for a USB mouse, so we need to change the report according to our specific hardware and needs.
 
-### a. USBD_COMPOSITE
+### a. USB FS CONFIG
 ```C
-#ifndef USE_USBD_COMPOSITE
 /* USB HID device FS Configuration Descriptor */
-__ALIGN_BEGIN static uint8_t USBD_HID_CfgDesc[USB_HID_CONFIG_DESC_SIZ] __ALIGN_END =
+__ALIGN_BEGIN static uint8_t USBD_HID_CfgFSDesc[USB_HID_CONFIG_DESC_SIZ]  __ALIGN_END =
 {
-  0x09,                                               /* bLength: Configuration Descriptor size */
-  USB_DESC_TYPE_CONFIGURATION,                        /* bDescriptorType: Configuration */
-  USB_HID_CONFIG_DESC_SIZ,                            /* wTotalLength: Bytes returned */
+  0x09, /* bLength: Configuration Descriptor size */
+  USB_DESC_TYPE_CONFIGURATION, /* bDescriptorType: Configuration */
+  USB_HID_CONFIG_DESC_SIZ,
+  /* wTotalLength: Bytes returned */
   0x00,
-  0x01,                                               /* bNumInterfaces: 1 interface */
-  0x01,                                               /* bConfigurationValue: Configuration value */
-  0x00,                                               /* iConfiguration: Index of string descriptor
-                                                         describing the configuration */
-#if (USBD_SELF_POWERED == 1U)
-  0xE0,                                               /* bmAttributes: Bus Powered according to user configuration */
-#else
-  0xA0,                                               /* bmAttributes: Bus Powered according to user configuration */
-#endif /* USBD_SELF_POWERED */
-  USBD_MAX_POWER,                                     /* MaxPower (mA) */
+  0x01,         /*bNumInterfaces: 1 interface*/
+  0x01,         /*bConfigurationValue: Configuration value*/
+  0x00,         /*iConfiguration: Index of string descriptor describing
+  the configuration*/
+  0xE0,         /*bmAttributes: bus powered and Support Remote Wake-up */
+  0x32,         /*MaxPower 100 mA: this current is used for detecting Vbus*/
 
   /************** Descriptor of Joystick Mouse interface ****************/
   /* 09 */
-  0x09,                                               /* bLength: Interface Descriptor size */
-  USB_DESC_TYPE_INTERFACE,                            /* bDescriptorType: Interface descriptor type */
-  0x00,                                               /* bInterfaceNumber: Number of Interface */
-  0x00,                                               /* bAlternateSetting: Alternate setting */
-  0x01,                                               /* bNumEndpoints */
-  0x03,                                               /* bInterfaceClass: HID */
-  0x00,                                               /* bInterfaceSubClass : 1=BOOT, 0=no boot */
-  0x00,                                               /* nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse */
-  0,                                                  /* iInterface: Index of string descriptor */
+  0x09,         /*bLength: Interface Descriptor size*/
+  USB_DESC_TYPE_INTERFACE,/*bDescriptorType: Interface descriptor type*/
+  0x00,         /*bInterfaceNumber: Number of Interface*/
+  0x00,         /*bAlternateSetting: Alternate setting*/
+  0x01,         /*bNumEndpoints*/
+  0x03,         /*bInterfaceClass: HID*/
+  0x00,         /*bInterfaceSubClass : 1=BOOT, 0=no boot*/
+  0x00,         /*nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse*/
+  0,            /*iInterface: Index of string descriptor*/
   /******************** Descriptor of Joystick Mouse HID ********************/
   /* 18 */
-  0x09,                                               /* bLength: HID Descriptor size */
-  HID_DESCRIPTOR_TYPE,                                /* bDescriptorType: HID */
-  0x11,                                               /* bcdHID: HID Class Spec release number */
+  0x09,         /*bLength: HID Descriptor size*/
+  HID_DESCRIPTOR_TYPE, /*bDescriptorType: HID*/
+  0x11,         /*bcdHID: HID Class Spec release number*/
   0x01,
-  0x00,                                               /* bCountryCode: Hardware target country */
-  0x01,                                               /* bNumDescriptors: Number of HID class descriptors to follow */
-  0x22,                                               /* bDescriptorType */
-  HID_MOUSE_REPORT_DESC_SIZE,                         /* wItemLength: Total length of Report descriptor */
+  0x00,         /*bCountryCode: Hardware target country*/
+  0x01,         /*bNumDescriptors: Number of HID class descriptors to follow*/
+  0x22,         /*bDescriptorType*/
+  HID_MOUSE_REPORT_DESC_SIZE,/*wItemLength: Total length of Report descriptor*/
   0x00,
   /******************** Descriptor of Mouse endpoint ********************/
   /* 27 */
-  0x07,                                               /* bLength: Endpoint Descriptor size */
-  USB_DESC_TYPE_ENDPOINT,                             /* bDescriptorType:*/
+  0x07,          /*bLength: Endpoint Descriptor size*/
+  USB_DESC_TYPE_ENDPOINT, /*bDescriptorType:*/
 
-  HID_EPIN_ADDR,                                      /* bEndpointAddress: Endpoint Address (IN) */
-  0x03,                                               /* bmAttributes: Interrupt endpoint */
-  HID_EPIN_SIZE,                                      /* wMaxPacketSize: 4 Bytes max */
+  HID_EPIN_ADDR,     /*bEndpointAddress: Endpoint Address (IN)*/
+  0x03,          /*bmAttributes: Interrupt endpoint*/
+  HID_EPIN_SIZE, /*wMaxPacketSize: 4 Byte max */
   0x00,
-  HID_FS_BINTERVAL,                                   /* bInterval: Polling Interval */
+  HID_FS_BINTERVAL,          /*bInterval: Polling Interval */
   /* 34 */
 };
-#endif /* USE_USBD_COMPOSITE  */
 ```
 We can see here in the **Descriptor of Joystick Mouse Interface** to set the **bInterfaceSubClass** : *1=BOOT, 0=no boot* and **nInterfaceProtocol** : *0=none, 1=keyboard, 2=mouse*
 
@@ -167,19 +164,19 @@ __ALIGN_BEGIN static uint8_t HID_MOUSE_ReportDesc[HID_MOUSE_REPORT_DESC_SIZE] __
 	0x09, 0x05,        // Usage (Game Pad)
 	0xA1, 0x01,        // Collection (Application)
 
-	// Buttons (12 x 1-bit)
+	// Buttons (10 x 1-bit)
 	0x05, 0x09,        //   Usage Page (Button)
 	0x19, 0x01,        //   Usage Minimum (Button 1)
-	0x29, 0x0C,        //   Usage Maximum (Button 12)
+	0x29, 0x0A,        //   Usage Maximum (Button 10)
 	0x15, 0x00,        //   Logical Minimum (0)
 	0x25, 0x01,        //   Logical Maximum (1)
-	0x95, 0x0C,        //   Report Count (12)
+	0x95, 0x0A,        //   Report Count (10)
 	0x75, 0x01,        //   Report Size (1)
 	0x81, 0x02,        //   Input (Data,Var,Abs)
 
-	// Padding to byte-align after 12 buttons (4 bits)
+	// Padding to byte-align after 10 buttons (6 bits)
 	0x95, 0x01,        //   Report Count (1)
-	0x75, 0x04,        //   Report Size (4)
+	0x75, 0x06,        //   Report Size (6)
 	0x81, 0x03,        //   Input (Const,Var,Abs) — Padding
 
 	// ---------------- 1 Hat Switch ----------------
@@ -194,22 +191,23 @@ __ALIGN_BEGIN static uint8_t HID_MOUSE_ReportDesc[HID_MOUSE_REPORT_DESC_SIZE] __
 	0x95, 0x01,        //   Report Count (1)
 	0x81, 0x42,        //   Input (Data,Var,Abs,Null)
 
-	// Axes (X, Y, Rx, Ry)
+	// Axes (X, Y, Rx, Ry, Z)
 	0x05, 0x01,        //   Usage Page (Generic Desktop)
 	0x09, 0x30,        //   Usage (X)
 	0x09, 0x31,        //   Usage (Y)
 	0x09, 0x33,        //   Usage (Rx)
 	0x09, 0x34,        //   Usage (Ry)
+	0x09, 0x35,        //   Usage (Z)
 	0x16, 0x00, 0x80,  //   Logical Minimum (-32768)
 	0x26, 0xFF, 0x7F,  //   Logical Maximum (+32768)
 	0x75, 0x10,        //   Report Size (16)
-	0x95, 0x04,        //   Report Count (4)
- 	0x81, 0x02,        //   Input (Data,Var,Abs)
+	0x95, 0x05,        //   Report Count (5)
+	0x81, 0x02,        //   Input (Data,Var,Abs)
 
 	0xC0               // End Collection
 };
 ```
-The size of this whole report is 72 Bytes and this report is pretty much self explainatory with comments.
+The size of this whole report is 74 Bytes and this report is pretty much self explainatory with comments.
 
 ## 2. Changes to Middlewares Headers
 
@@ -218,26 +216,24 @@ Go to Middlewares\ST\STM32_USB_Device_Library\Class\HID\Inc and open the code in
 As we have made changes to the source files we need to make sure the headers match perfectly. If anything is not properly defined the whole stack will be broken and your computer wont recognize the device as a vaid HID.
 
 ```C
-#ifndef HID_EPIN_ADDR
-#define HID_EPIN_ADDR                              0x81U
-#endif /* HID_EPIN_ADDR */
-#define HID_EPIN_SIZE                              0x0BU
+#define HID_EPIN_ADDR                 0x81U
+#define HID_EPIN_SIZE                 0x0DU
 
-#define USB_HID_CONFIG_DESC_SIZ                    34U
-#define USB_HID_DESC_SIZ                           9U
-#define HID_MOUSE_REPORT_DESC_SIZE                 72U
+#define USB_HID_CONFIG_DESC_SIZ       34U
+#define USB_HID_DESC_SIZ              9U
+#define HID_MOUSE_REPORT_DESC_SIZE    74U
 ```
 Now we need to change the descriptor size with the actuall size which is 72 Bytes
 
-**HID_EPIN_SIZE** is the size of the actual data packet you send to the host. In our case: 0x0B → 11 bytes (88 bits). We can calculate it like this:
+**HID_EPIN_SIZE** is the size of the actual data packet you send to the host. In our case: 0x0D → 13 bytes (104 bits). We can calculate it like this:
 
 | Section     | Bits |
 | ----------- | ---- |
-| Buttons     | 12   |
-| Padding     | 4    |
+| Buttons     | 10   |
+| Padding     | 6    |
 | Hat switch  | 8    |
-| Axes (4×16) | 64   |
-| **Total**   | 88   |
+| Axes (5×16) | 80   |
+| **Total**   | 102  |
 
 
 ## 3. Changes to main.c
@@ -248,7 +244,7 @@ Now we need to change the descriptor size with the actuall size which is 72 Byte
 typedef struct __attribute__((packed)) {
     uint16_t buttons;
     uint8_t hat;
-    int16_t x, y, rx, ry;
+    int16_t x, y, rx, ry,z;
 } joystickReport;
 ```
 
@@ -279,14 +275,14 @@ uint8_t get_hat_value(void)
 	uint8_t left  = !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_4);
 	uint8_t right = !HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_15);
 
-    if (up && right)   return 1;  // Up-Right
-    if (right && down) return 3;  // Down-Right
-    if (down && left)  return 5;  // Down-Left
-    if (left && up)    return 7;  // Up-Left
     if (up)            return 0;  // Up
+    if (up && right)   return 1;  // Up-Right
     if (right)         return 2;  // Right
+    if (right && down) return 3;  // Down-Right
     if (down)          return 4;  // Down
+    if (down && left)  return 5;  // Down-Left
     if (left)          return 6;  // Left
+    if (left && up)    return 7;  // Up-Left
 
     return 0x0F;  // Neutral
 }
@@ -295,28 +291,47 @@ void send_gamepad_report(void)
 {
     joystickReport report = {0};
 
-    // ---- Buttons: Read 12 GPIOs (example mapping) ----
+    // ---- Buttons: Read 10 GPIOs  ----
     report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_12) ? (1 << 2) : 0;		//X
     report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_13) ? (1 << 3) : 0;		//Y
     report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_14) ? (1 << 0) : 0;   	//A
     report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_15) ? (1 << 1) : 0;		//B
-    report.buttons |= !HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8)  ? (1 << 4) : 0;		// lt1
-    report.buttons |= !HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)  ? (1 << 6) : 0;		// lt2
-    report.buttons |= !HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) ? (1 << 5) : 0;		//rt1
-    report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5)  ? (1 << 8) : 0;		// Enter
-    report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)  ? (1 << 10) : 0;	// lj / scl
-    report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7)  ? (1 << 9) : 0;		// rj / sda
-    report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8)  ? (1 << 7) : 0;		// Back
-    report.buttons |= !HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4)  ? (1 << 11) : 0;	// rt2
+    report.buttons |= !HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_9)  ? (1 << 4) : 0;		// lt2
+    report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_5)  ? (1 << 6) : 0;		// Enter
+    report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_6)  ? (1 << 8) : 0;	// lj / scl
+    report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_7)  ? (1 << 7) : 0;		// rj / sda
+    report.buttons |= !HAL_GPIO_ReadPin(GPIOB, GPIO_PIN_8)  ? (1 << 5) : 0;		// Back
+    report.buttons |= !HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4)  ? (1 << 9) : 0;	// rt2
 
     // ---- Hat switch ----
     report.hat = get_hat_value();
 
     // ---- Axes: ADC static data ----
-    report.x  = adcVal[0];
-    report.y  = adcVal[1];
-    report.rx = adcVal[2];
-    report.ry = adcVal[3];
+    report.rx = adcVal[0];
+    report.ry = adcVal[1];
+    report.x  = adcVal[2];
+    report.y  = adcVal[3];
+
+    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET) {
+        zVal =  0;
+    }
+
+    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == GPIO_PIN_RESET) {
+        zVal = 4095;
+    }
+
+    // If both pressed, you can choose behavior stay at 0
+    if ((HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET) &&
+        (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == GPIO_PIN_RESET)) {
+        zVal = 2047;
+    }
+
+    if ((HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == 1) &&
+        (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == 1)) {
+        zVal = 2047;
+    }
+
+    report.z = zVal;
 
     // ---- Send 11-byte report ----
     USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&report, sizeof(report));
@@ -376,7 +391,17 @@ Then just call the ***send_gamepad_report()*** to continuously send values throu
 6. Make sure to check the ***MX_GPIO_Init()*** for the correct pin definitons and pullups or pulldowns
 
 ```C
-/*Configure GPIO pins : PA4 PA8 PA9 PA10
+ /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : PC13 */
+  GPIO_InitStruct.Pin = GPIO_PIN_13;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : PA4 PA8 PA9 PA10
                            PA15 */
   GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10
                           |GPIO_PIN_15;
