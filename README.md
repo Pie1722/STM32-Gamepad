@@ -76,7 +76,7 @@ After that press ctrl+S to save the file and use the auto code generator and sel
 
 # Codes
 <details>
-  <summary>DINPUT</summary>
+  <summary>##DINPUT</summary>
 We need to make some changes to the codes created by the STM32CubeIDE to make it work for our custom hardware.
 
 ## Table of Contents
