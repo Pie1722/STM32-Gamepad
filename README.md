@@ -421,7 +421,15 @@ Then just call the ***send_gamepad_report()*** to continuously send values throu
 <details>
 	<summary>XINPUT</summary>
 	
-gkhgjhgcjhgcjhc
-fagdfg
+## WORK IN PROGRESS
+
+</details>
+
+---
+
+<details>
+	<summary>WIRELESS</summary>
+	
+## WORK IN PROGRESS
 
 </details>
