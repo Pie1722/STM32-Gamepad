@@ -54,6 +54,7 @@ DMA_HandleTypeDef hdma_adc1;
 
 TIM_HandleTypeDef htim2;
 int ledState = 0;
+
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -72,6 +73,9 @@ static void MX_TIM2_Init(void);
 /* USER CODE BEGIN 0 */
 volatile uint16_t adcVal[4] = {0};
 int8_t adcValueReady;
+uint32_t x,y,lx,ly;
+uint16_t xRightStickValue_ADC, yRightStickValue_ADC, yLeftStickValue_ADC, xLeftStickValue_ADC;
+int8_t count;
 
 uint8_t get_hat_value(void)
 {
@@ -91,6 +95,7 @@ uint8_t get_hat_value(void)
 
     return 0x0F;  // Neutral
 }
+
 
 void send_gamepad_report(void)
 {
@@ -117,31 +122,11 @@ void send_gamepad_report(void)
 
     // ---- Axes: ADC static data ----
 
-	report.x = (int16_t)map( adcVal[2], 0, 4096, INT16_MIN, INT16_MAX );
-	report.y = (int16_t)map( adcVal[3], 0, 4096, INT16_MIN, INT16_MAX );
-	report.zr = (int16_t)map( adcVal[1], 4096, 0, INT16_MIN, INT16_MAX );
-	report.za = (int16_t)map( adcVal[0], 0, 4096, INT16_MIN, INT16_MAX );
+	report.x = (int16_t)map( xRightStickValue_ADC, 0, 4095, INT16_MIN, INT16_MAX );
+	report.y = (int16_t)map( yRightStickValue_ADC, 0, 4095, INT16_MIN, INT16_MAX );
+	report.zr = (int16_t)map( yLeftStickValue_ADC, 0, 4095, INT16_MIN, INT16_MAX );
+	report.za = (int16_t)map( xLeftStickValue_ADC, 0, 4095, INT16_MIN, INT16_MAX );
 
-//    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET) {
-//        zVal =  0;
-//    }
-//
-//    if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == GPIO_PIN_RESET) {
-//        zVal = 4095;
-//    }
-//
-//    // If both pressed, you can choose behavior stay at 0
-//    if ((HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET) &&
-//        (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == GPIO_PIN_RESET)) {
-//        zVal = 2047;
-//    }
-//
-//    if ((HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == 1) &&
-//        (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == 1)) {
-//        zVal = 2047;
-//    }
-//
-//    report.za = zVal;
 
     // ---- Send 11-byte report ----
     USBD_HID_SendReport(&hUsbDeviceFS, (uint8_t*)&report, sizeof(report));
@@ -397,20 +382,30 @@ static void MX_DMA_Init(void)
 /**	ADC ISR
 *		Handles the values from ADC after the conversion finished
 */
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
 
-	if( adcValueReady == 0 ){
+    x  += adcVal[2];
+    y  += adcVal[3];
+    lx += adcVal[0];
+    ly += adcVal[1];
 
-//	    // ---- Axes: ADC static data ----
-//
-//		report.x = (int16_t)map( adcVal[2], 0, 4096, INT16_MIN, INT16_MAX );
-//		report.y = (int16_t)map( adcVal[3], 0, 4096, INT16_MIN, INT16_MAX );
-//		report.zr = (int16_t)map( adcVal[0], 0, 4096, INT16_MIN, INT16_MAX );
-//		report.za = (int16_t)map( adcVal[1], 0, 4096, INT16_MIN, INT16_MAX );
+    count++;
 
-		adcValueReady = 1;
-	}
+    // after 100 samples, average them
+    if (count >= 100) {
 
+        xRightStickValue_ADC = x / 100;
+        yRightStickValue_ADC = y / 100;
+        xLeftStickValue_ADC  = lx / 100;
+        yLeftStickValue_ADC  = ly / 100;
+
+        // reset for next round
+        x = 0;
+        y = 0;
+        lx = 0;
+        ly = 0;
+        count = 0;
+    }
 }
 
 static void MX_GPIO_Init(void)
