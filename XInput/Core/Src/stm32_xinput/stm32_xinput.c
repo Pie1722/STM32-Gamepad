@@ -116,18 +116,19 @@ void readButtons(){
 /*	Read input values from sticks and triggers
 *
 */
+
 void readAdcValues(){
 	
 	if( adcValueReady == 1 ){
 //		rightTriggerValue = (uint8_t)map( rightTriggerValue_ADC, 0, 4040, 0, UINT8_MAX );
 //		leftTriggerValue 	= (uint8_t)map( leftTriggerValue_ADC, 0, 4040, 0, UINT8_MAX );
-		leftTriggerValue  = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET ? 0 : 255;
-		rightTriggerValue = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == GPIO_PIN_RESET ? 0 : 255;
+		leftTriggerValue  = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == SET ? 0 : 255;
+		rightTriggerValue = HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == SET ? 0 : 255;
 
-		xRightStickValue = (int16_t)map( xRightStickValue_ADC, 0, 4096, INT16_MIN, INT16_MAX );
-		yRightStickValue = (int16_t)map( yRightStickValue_ADC, 4096, 0, INT16_MIN, INT16_MAX );							// 4096 is the max value that my adc presents with potentiometers
-		xLeftStickValue = (int16_t)map( xLeftStickValue_ADC, 0, 4096, INT16_MIN, INT16_MAX );
-		yLeftStickValue = (int16_t)map( yLeftStickValue_ADC, 4096 , 0, INT16_MIN, INT16_MAX );
+		xRightStickValue = (int16_t)map( xRightStickValue_ADC, 0, 4095, INT16_MIN, INT16_MAX );
+		yRightStickValue = (int16_t)map( yRightStickValue_ADC, 4095, 0, INT16_MIN, INT16_MAX );							// 4095 is the max value that my adc presents with potentiometers
+		xLeftStickValue = (int16_t)map( xLeftStickValue_ADC, 0, 4095, INT16_MIN, INT16_MAX );
+		yLeftStickValue = (int16_t)map( yLeftStickValue_ADC, 4095, 0, INT16_MIN, INT16_MAX );
 		
 		adcValueReady = 0;
 	}
