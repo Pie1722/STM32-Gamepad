@@ -54,6 +54,8 @@ TIM_HandleTypeDef htim2;
 
 /* USER CODE BEGIN PV */
 uint16_t ADC_buffer[4];
+uint32_t x,y,lx,ly;
+int8_t count;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -433,6 +435,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 	*/
 }
 
+
 /**	ADC ISR
 *		Handles the values from ADC after the conversion finished
 */
@@ -440,14 +443,29 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc){
 
 	if( adcValueReady == 0 ){
 
-		xRightStickValue_ADC	= ADC_buffer[0];
-		yRightStickValue_ADC	= ADC_buffer[1];
-		xLeftStickValue_ADC		= ADC_buffer[2];
-		yLeftStickValue_ADC		= ADC_buffer[3];
+		x	+= ADC_buffer[0];
+		y	+= ADC_buffer[1];
+		lx	+= ADC_buffer[2];
+		ly	+= ADC_buffer[3];
+
+		count++;
 
 		adcValueReady = 1;
 	}
 
+	if (count == 100) {
+
+		xRightStickValue_ADC	= x/100;
+		yRightStickValue_ADC	= y/100;
+		xLeftStickValue_ADC		= lx/100;
+		yLeftStickValue_ADC		= ly/100;
+
+        x = 0;
+        y = 0;
+        lx = 0;
+        ly = 0;
+        count = 0;
+	}
 }
 
 #ifdef USE_FULL_ASSERT
