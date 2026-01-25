@@ -282,11 +282,11 @@ int main(void)
   {
 	  sendButtons();
 	  uint8_t check = nrf24_transmit((uint8_t*)&joy, sizeof(joy));
-	  if (check == 1) {
-	      HAL_GPIO_WritePin(LED_BLTN_GPIO_Port, LED_BLTN_Pin, GPIO_PIN_SET);  // SUCCESS
-	  } else {
-	      HAL_GPIO_WritePin(LED_BLTN_GPIO_Port, LED_BLTN_Pin, GPIO_PIN_RESET); // FAIL
-	  }
+//	  if (check == 1) {
+//	      HAL_GPIO_WritePin(LED_BLTN_GPIO_Port, LED_BLTN_Pin, GPIO_PIN_SET);  // SUCCESS
+//	  } else {
+//	      HAL_GPIO_WritePin(LED_BLTN_GPIO_Port, LED_BLTN_Pin, GPIO_PIN_RESET); // FAIL
+//	  }
 
     /* USER CODE END WHILE */
 
