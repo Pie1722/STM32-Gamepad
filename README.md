@@ -233,7 +233,7 @@ Now we need to change the descriptor size with the actuall size which is 72 Byte
 | Padding     | 6    |
 | Hat switch  | 8    |
 | Axes (5×16) | 80   |
-| **Total**   | 102  |
+| **Total**   | 104  |
 
 
 ## 3. Changes to main.c
