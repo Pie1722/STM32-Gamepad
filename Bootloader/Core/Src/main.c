@@ -41,9 +41,11 @@
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim2;
-int ledState = 0;
 
 /* USER CODE BEGIN PV */
+
+int ledState = 0;
+
 __attribute__( ( naked, noreturn ) ) void BootJumpASM( uint32_t SP, uint32_t RH )
 {
   __asm("MSR      MSP,r0");
@@ -120,6 +122,7 @@ int main(void)
   uint8_t xinput_count = 0;
   uint8_t dinput_count = 0;
   uint8_t wireless_count = 0;
+  uint8_t wirerx_count = 0;
 
   HAL_TIM_Base_Start_IT(&htim2);
 
@@ -129,7 +132,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
+
 	  // Check 10 times, every 10 ms
 	    for (int i = 0; i < 10; i++) {
 	        if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_8) == GPIO_PIN_RESET) {
@@ -141,6 +144,9 @@ int main(void)
 	        if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_10) == GPIO_PIN_RESET) {
 	            wireless_count++;
 	        }
+	        if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_4) == GPIO_PIN_RESET) {
+	        	wirerx_count++;
+	        }
 	        HAL_Delay(10); // 10 ms delay
 	    }
 
@@ -148,14 +154,16 @@ int main(void)
 	        jump_to_firmware((uint32_t *)0x08002000);
 	    }
 	    else if (dinput_count >= 10) {
-	        jump_to_firmware((uint32_t *)0x0800F000);
+	        jump_to_firmware((uint32_t *)0x0800C000);
 	    }
 	    else if (wireless_count >= 10) {
-	        jump_to_firmware((uint32_t *)0x08019000);
+	        jump_to_firmware((uint32_t *)0x08016000);
 	    }
-	    else {
-	        // no button detected, loop again
+	    else if (wirerx_count >= 10){
+	        jump_to_firmware((uint32_t *)0x0801B000);
 	    }
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -242,15 +250,6 @@ static void MX_TIM2_Init(void)
 
 }
 
-
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-{
-    if (htim->Instance == TIM2)
-    {
-        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13); // or your LED pin
-    }
-}
-
 /**
   * @brief GPIO Initialization Function
   * @param None
@@ -278,8 +277,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PA8 PA9 PA10 */
-  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10;
+  /*Configure GPIO pins : PA4 PA8 PA9 PA10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
@@ -290,7 +289,13 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if (htim->Instance == TIM2)
+    {
+        HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13); // or your LED pin
+    }
+}
 /* USER CODE END 4 */
 
 /**
