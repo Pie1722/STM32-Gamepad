@@ -1,0 +1,12 @@
+../Core/Src/stm32_xinput/xinput.c:62:6:XINPUT_init	1
+../Core/Src/stm32_xinput/xinput.c:70:6:XINPUT_buttonUpdate	23
+../Core/Src/stm32_xinput/xinput.c:213:6:XINPUT_buttonArrayUpdate	12
+../Core/Src/stm32_xinput/xinput.c:255:6:XINPUT_dpadUpdate	8
+../Core/Src/stm32_xinput/xinput.c:272:6:XINPUT_triggerUpdate	1
+../Core/Src/stm32_xinput/xinput.c:281:6:XINPUT_singleTriggerUpdate	3
+../Core/Src/stm32_xinput/xinput.c:298:6:XINPUT_stickUpdate	3
+../Core/Src/stm32_xinput/xinput.c:324:6:XINPUT_sendXinput	2
+../Core/Src/stm32_xinput/xinput.c:338:9:XINPUT_receiveXinput	1
+../Core/Src/stm32_xinput/xinput.c:380:6:XINPUT_setLEDMode	2
+../Core/Src/stm32_xinput/xinput.c:405:6:XINPUT_LEDUpdate	1
+../Core/Src/stm32_xinput/xinput.c:437:6:XINPUT_LEDPatternSelect	11

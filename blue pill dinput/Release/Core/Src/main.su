@@ -1,0 +1,8 @@
+../Core/Src/main.c:82:9:get_hat_value	16	static
+../Core/Src/main.c:102:6:send_gamepad_report	32	static
+../Core/Src/main.c:192:6:SystemClock_Config	96	static,ignoring_inline_asm
+../Core/Src/main.c:142:5:main	56	static,ignoring_inline_asm
+../Core/Src/main.c:354:6:HAL_TIM_PeriodElapsedCallback	0	static
+../Core/Src/main.c:387:6:HAL_ADC_ConvCpltCallback	24	static
+../Core/Src/main.c:460:9:map	8	static
+../Core/Src/main.c:469:6:Error_Handler	0	static,ignoring_inline_asm

@@ -1,0 +1,9 @@
+../Core/Src/stm32_xinput/stm32_xinput.c:40:6:declareButtonPins	1
+../Core/Src/stm32_xinput/stm32_xinput.c:61:6:declareAnalogPins	1
+../Core/Src/stm32_xinput/stm32_xinput.c:74:6:declareEncoderPins	1
+../Core/Src/stm32_xinput/stm32_xinput.c:82:6:readButtons	4
+../Core/Src/stm32_xinput/stm32_xinput.c:121:6:readAdcValues	16
+../Core/Src/stm32_xinput/stm32_xinput.c:174:6:updateTriggers	1
+../Core/Src/stm32_xinput/stm32_xinput.c:183:6:updateSticks	1
+../Core/Src/stm32_xinput/stm32_xinput.c:193:9:map	1
+D:\Programs\Windows\Install_dir\ST\STM32CubeIDE_1.19.0\STM32CubeIDE\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.13.3.rel1.win32_1.0.0.202411081344\tools\arm-none-eabi\include\stdlib.h:70:5:abs	2
