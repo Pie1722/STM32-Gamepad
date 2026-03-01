@@ -158,10 +158,10 @@ void readAdcValues(){
 //		xLeftStickValue = (int16_t)map( xLeftStickValue_ADC, 0, 4095, INT16_MIN, INT16_MAX );
 //		yLeftStickValue = (int16_t)map( yLeftStickValue_ADC, 4095, 0, INT16_MIN, INT16_MAX );
 
-		xRightStickValue = (int16_t)map( drx, -2047, 2045, INT16_MIN, INT16_MAX );
-		yRightStickValue = (int16_t)map( dry, 2045, -2047, INT16_MIN, INT16_MAX );							// 4095 is the max value that my adc presents with potentiometers
-		xLeftStickValue = (int16_t)map( dlx, -2047, 2047, INT16_MIN, INT16_MAX );
-		yLeftStickValue = (int16_t)map( dly, 2047, -2047, INT16_MIN, INT16_MAX );
+		xRightStickValue = (int16_t)map( drx, -2047, 2047, -32767, 32767);
+		yRightStickValue = (int16_t)map( dry, 2047, -2047, -32767, 32767);							// 4095 is the max value that my adc presents with potentiometers
+		xLeftStickValue = (int16_t)map( dlx, -2047, 2047, -32767, 32767);
+		yLeftStickValue = (int16_t)map( dly, 2047, -2047, -32767, 32767);
 		
 		adcValueReady = 0;
 	}
