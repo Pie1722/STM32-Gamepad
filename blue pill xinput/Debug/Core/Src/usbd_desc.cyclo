@@ -1,0 +1,7 @@
+../Core/Src/usbd_desc.c:183:12:USBD_FS_DeviceDescriptor	1
+../Core/Src/usbd_desc.c:196:12:USBD_FS_LangIDStrDescriptor	1
+../Core/Src/usbd_desc.c:209:12:USBD_FS_ProductStrDescriptor	2
+../Core/Src/usbd_desc.c:229:12:USBD_FS_ManufacturerStrDescriptor	1
+../Core/Src/usbd_desc.c:242:12:USBD_FS_SerialStrDescriptor	2
+../Core/Src/usbd_desc.c:262:12:USBD_FS_ConfigStrDescriptor	2
+../Core/Src/usbd_desc.c:282:12:USBD_FS_InterfaceStrDescriptor	2
