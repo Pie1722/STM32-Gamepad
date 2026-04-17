@@ -1,0 +1,8 @@
+../Core/Src/main.c:82:9:get_hat_value	4
+../Core/Src/main.c:102:6:send_gamepad_report	1
+../Core/Src/main.c:192:6:SystemClock_Config	4
+../Core/Src/main.c:142:5:main	9
+../Core/Src/main.c:354:6:HAL_TIM_PeriodElapsedCallback	2
+../Core/Src/main.c:387:6:HAL_ADC_ConvCpltCallback	2
+../Core/Src/main.c:460:9:map	1
+../Core/Src/main.c:469:6:Error_Handler	1
