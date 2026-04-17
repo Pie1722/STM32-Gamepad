@@ -2,7 +2,7 @@
 
 This is a game controller made using STM32 Black Pill (STM32F401CCU6). I have used STM32CubeIde for building this project and used the auto code generator for making my work easy.
 
-You can find the project design files here in https://easyeda.com/editor#id=91b1ce426ade499f8b70a892458978cc|d504b3108bfa4b1d89d6342dad96e935|9b051698047e44acb282098a8e95ffe9
+You can find the project design files here in [Easy EDA](https://easyeda.com/editor#id=|9b051698047e44acb282098a8e95ffe9|d504b3108bfa4b1d89d6342dad96e935|91b1ce426ade499f8b70a892458978cc)
 
 We can use different cheaper alternatives to the black pill like the standar Blue Pill board (STM32F103C8T6) or any other microcontroller which supports HID.
 
