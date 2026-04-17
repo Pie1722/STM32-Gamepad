@@ -1,0 +1,8 @@
+.project
+build/
+Debug/
+*.o
+*.elf
+*.bin
+*.map
+*.log
